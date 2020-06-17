@@ -87,6 +87,7 @@ namespace DogGo.Controllers
         // GET: OwnersController/Delete/5
         public ActionResult Delete(int id)
         {
+            Owner owner = _ownerRepo.GetOwnerById(id);
             return View();
         }
 
