@@ -16,5 +16,6 @@ namespace DogGo.Models
         public string? Notes { get; set; }
         #nullable disable
         public int OwnerId { get; set; }
+        public Owner Owner { get; set; }
     }
 }
