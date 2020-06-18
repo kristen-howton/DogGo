@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DogGo.Utils;
 
 namespace DogGo.Repositories
 {
@@ -76,6 +77,56 @@ namespace DogGo.Repositories
             }
         }
 
+        public void UpdateDog(Dog dog)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            UPDATE Dog
+                            SET 
+                                [Name] = @name, 
+                                Breed = @breed, 
+                                Notes = @notes, 
+                                OwnerId = @ownerId,
+                                ImageUrl = @imageUrl
+                            WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@name", dog.Name);
+                    cmd.Parameters.AddWithValue("@breed", dog.Breed);
+                    UpdateNullable.SetNullableString(cmd, "@notes", dog.Notes);
+                    cmd.Parameters.AddWithValue("@ownerId", dog.OwnerId);
+                    UpdateNullable.SetNullableString(cmd, "@imageUrl", dog.ImageUrl);
+                    cmd.Parameters.AddWithValue("@id", dog.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeleteDog(int dogId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            DELETE FROM Dog
+                            WHERE Id = @id
+                        ";
+
+                    cmd.Parameters.AddWithValue("@id", dogId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public Dog GetDogById(int id)
         {
             using (SqlConnection conn = Connection)
@@ -86,7 +137,6 @@ namespace DogGo.Repositories
                     cmd.CommandText = @"
                         SELECT Id, [Name], ImageUrl, OwnerId, Breed, Notes 
                         FROM Dog
-
                         WHERE Id = @id
                     ";
 
