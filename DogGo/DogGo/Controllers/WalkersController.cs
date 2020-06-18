@@ -49,17 +49,20 @@ namespace DogGo.Controllers
         }
 
         // POST: WalkersController/Create
+        // POST: Owners/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Walker walker)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _walkerRepo.AddWalker(walker);
+
+                return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View(walker);
             }
         }
 
@@ -93,7 +96,7 @@ namespace DogGo.Controllers
         // POST: WalkersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Walker walker)
         {
             try
             {
