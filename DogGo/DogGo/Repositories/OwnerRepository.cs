@@ -1,7 +1,13 @@
 ﻿using DogGo.Models;
+using DogGo.Models.ViewModels;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace DogGo.Repositories
 {
@@ -200,6 +206,7 @@ namespace DogGo.Repositories
             }
         }
 
+       
         public void DeleteOwner(int ownerId)
         {
             using (SqlConnection conn = Connection)
@@ -219,5 +226,7 @@ namespace DogGo.Repositories
                 }
             }
         }
+
+       
     }
 }
