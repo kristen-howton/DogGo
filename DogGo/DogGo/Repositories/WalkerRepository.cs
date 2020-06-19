@@ -109,14 +109,14 @@ namespace DogGo.Repositories
                     cmd.CommandText = @"
                             UPDATE Walker
                             SET 
-                                [Name], 
-                                ImageUrl, 
-                                NeighborhoodId
+                                [Name] = @name, 
+                                ImageUrl = @imageUrl, 
+                                NeighborhoodId = @neighborhoodId
                             WHERE Id = @id";
 
                     cmd.Parameters.AddWithValue("@name", walker.Name);
                     UpdateNullable.SetNullableString(cmd, "@imageUrl", walker.ImageUrl);
-                    cmd.Parameters.AddWithValue("@name", walker.NeighborhoodId);
+                    cmd.Parameters.AddWithValue("@neighborhoodId", walker.NeighborhoodId);
                     cmd.Parameters.AddWithValue("@id", walker.Id);
 
                     cmd.ExecuteNonQuery();
