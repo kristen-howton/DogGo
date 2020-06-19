@@ -169,6 +169,7 @@ namespace DogGo.Repositories
             }
         }
 
+
         public void UpdateOwner(Owner owner)
         {
             using (SqlConnection conn = Connection)

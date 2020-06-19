@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DogGo.Models;
+using DogGo.Models.ViewModels;
 using DogGo.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,18 @@ namespace DogGo.Controllers
 
     {
         private readonly OwnerRepository _ownerRepo;
+        private readonly DogRepository _dogRepo;
+        private readonly WalkerRepository _walkerRepo;
+        private readonly NeighborhoodRepository _neighborhoodRepo;
 
         // The constructor accepts an IConfiguration object as a parameter. This class comes from the ASP.NET framework and is useful for retrieving things out of the appsettings.json file like connection strings.
         public OwnersController(IConfiguration config)
         {
             _ownerRepo = new OwnerRepository(config);
+            _dogRepo = new DogRepository(config);
+            _walkerRepo = new WalkerRepository(config);
+            _neighborhoodRepo = new NeighborhoodRepository(config);
+
         }
 
         // GET: Owners
@@ -29,40 +37,36 @@ namespace DogGo.Controllers
             return View(owners);
         }
 
-        // GET: Owners/Details
+        // GET: Owners/Details/5
         public ActionResult Details(int id)
         {
             Owner owner = _ownerRepo.GetOwnerById(id);
+            List<Dog> dogs = _dogRepo.GetDogsByOwnerId(owner.Id);
+            List<Walker> walkers = _walkerRepo.GetWalkersInNeighborhood(owner.NeighborhoodId);
 
-            if (owner == null)
+            ProfileViewModel vm = new ProfileViewModel()
             {
-                return NotFound();
-            }
+                Owner = owner,
+                Dogs = dogs,
+                Walkers = walkers
+            };
 
-            return View(owner);
+            return View(vm);
         }
 
-        // GET: OwnersController/Create
+
+        // GET: Owners/Create
         public ActionResult Create()
         {
-            return View();
-        }
+            List<Neighborhood> neighborhoods = _neighborhoodRepo.GetAll();
 
-        // POST: Owners/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Owner owner)
-        {
-            try
+            OwnerFormViewModel vm = new OwnerFormViewModel()
             {
-                _ownerRepo.AddOwner(owner);
+                Owner = new Owner(),
+                Neighborhoods = neighborhoods
+            };
 
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                return View(owner);
-            }
+            return View(vm);
         }
 
         // GET: Owners/Edit/5
