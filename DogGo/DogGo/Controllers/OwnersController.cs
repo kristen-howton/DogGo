@@ -58,7 +58,6 @@ namespace DogGo.Controllers
             return View(vm);
         }
 
-
         [Authorize]
         public ActionResult Create()
         {
@@ -104,7 +103,6 @@ namespace DogGo.Controllers
                 return View(owner);
             }
         }
-
 
         // GET: OwnersController/Delete/5
         // GET: Owners/Delete/5
@@ -160,8 +158,15 @@ namespace DogGo.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity));
 
-            return RedirectToAction("Index", "Dogs");
+            return RedirectToAction("Index", "Dog");
         }
 
+        public async Task<ActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
     }
+
+    
 }
