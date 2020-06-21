@@ -35,7 +35,7 @@ namespace DogGo.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT Id, [Name], ImageUrl, NeighborhoodId
-                        FROM Walker
+                        FROM Walker 
                     ";
 
                     SqlDataReader reader = cmd.ExecuteReader();

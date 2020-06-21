@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DogGo.Models;
 using DogGo.Repositories;
@@ -22,6 +23,8 @@ namespace DogGo.Controllers
         // GET: Dogs
         public ActionResult Index()
         {
+            int ownerId = GetCurrentUserId();
+
             List<Dog> dogs = _dogRepo.GetAllDogs();
 
             return View(dogs);
@@ -83,6 +86,9 @@ namespace DogGo.Controllers
         {
             try
             {
+                // update the dogs OwnerId to the current user's Id 
+                dog.OwnerId = GetCurrentUserId();
+
                 _dogRepo.AddDog(dog);
 
                 return RedirectToAction("Index");
@@ -97,6 +103,7 @@ namespace DogGo.Controllers
         // GET: Owners/Delete/5
         public ActionResult Delete(int id)
         {
+           
             Dog dog = _dogRepo.GetDogById(id);
 
             return View(dog);
@@ -117,6 +124,12 @@ namespace DogGo.Controllers
             {
                 return View(dog);
             }
+        }
+
+        private int GetCurrentUserId()
+        {
+            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.Parse(id);
         }
     }
 }
