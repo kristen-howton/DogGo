@@ -39,11 +39,12 @@ namespace DogGo.Controllers
         {
             Walker walker = _walkerRepo.GetWalkerById(id);
             List<Walks> walk = _walksRepo.GetWalksByWalkerId(walker.Id);
-
+            Neighborhood neighborhood = _neighborhoodRepo.GetNeigborhoodById(id);
             WalkerViewModel vm = new WalkerViewModel()
             {
                 Walker = walker,
-                Walks = walk
+                Walks = walk,
+                Neighborhood = neighborhood
             };
 
             return View(vm);
