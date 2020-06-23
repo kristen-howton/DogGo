@@ -10,6 +10,7 @@
    <img class="walker-image" src="@Model.Walker.ImageUrl" alt="avatar" />
    <div>Name: @Model.Walker.Name</div>
    <div>Neighborhood: @Model.Neighborhood.Name</div>
+   <div>Total Duration: @Model.Duration</div>
 </div>
 <section class="col-lg-4 col-md-8 container mt-5">
     <h1>Recent Walks</h1>
@@ -19,7 +20,7 @@
         {
                 <li class="list-group-item disabled" aria-disabled="true">
                     <span class="font-weight-bold ml-4">Date: @walk.Date</span>
-                    <span class="font-weight-bold ml-4">Client: @walk.WalkerId</span>
+                    <span class="font-weight-bold ml-4">Client: @walk.OwnerName</span>
                     <span class="font-weight-bold ml-4">Duration: @walk.Duration minutes</span>
                 </li>
          }

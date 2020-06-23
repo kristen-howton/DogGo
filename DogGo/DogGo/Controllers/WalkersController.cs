@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DogGo.Models;
 using DogGo.Models.ViewModels;
 using DogGo.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -45,12 +46,13 @@ namespace DogGo.Controllers
                 Walker = walker,
                 Walks = walk,
                 Neighborhood = neighborhood
+                
             };
 
             return View(vm);
         }
 
-        // GET: WalkersController/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();

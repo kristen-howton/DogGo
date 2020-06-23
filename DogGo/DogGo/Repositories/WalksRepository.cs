@@ -14,6 +14,7 @@ namespace DogGo.Repositories
             _config = config;
         }
 
+
         public SqlConnection Connection
         {
             get
@@ -56,6 +57,7 @@ namespace DogGo.Repositories
             }
 
         }
+        
         public List<Walks> GetWalksByWalkerId(int walkerId)
         {
             using (SqlConnection conn = Connection)
@@ -65,9 +67,11 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                SELECT Id, Date, Duration, WalkerId, DogId
-                FROM Walks
-                WHERE WalkerId = @walkerId
+                SELECT w.Id, w.Date, w.Duration, w.WalkerId, w.DogId, o.[Name] AS OwnerName
+                FROM Walks w
+                JOIN Dog d ON d.Id = w.DogId
+                JOIN [Owner] o ON o.Id = d.OwnerId 
+                WHERE WalkerId = @walkerId 
             ";
 
                     cmd.Parameters.AddWithValue("@walkerId", walkerId);
@@ -82,9 +86,11 @@ namespace DogGo.Repositories
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Date = reader.GetDateTime(reader.GetOrdinal("Date")),
-                            Duration = reader.GetInt32(reader.GetOrdinal("Duration"))/60,
+                            Duration = reader.GetInt32(reader.GetOrdinal("Duration")) / 60,
                             WalkerId = reader.GetInt32(reader.GetOrdinal("WalkerId")),
                             DogId = reader.GetInt32(reader.GetOrdinal("DogId")),
+                            OwnerName = reader.GetString(reader.GetOrdinal("OwnerName"))
+
                         };
 
                         walks.Add(walk);

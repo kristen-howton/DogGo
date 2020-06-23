@@ -24,5 +24,6 @@ namespace DogGo.Models
         [DisplayName("Owner")]
         public int OwnerId { get; set; }
         public Owner Owner { get; set; }
+       
     }
 }
