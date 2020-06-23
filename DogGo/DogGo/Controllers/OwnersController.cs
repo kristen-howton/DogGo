@@ -72,6 +72,24 @@ namespace DogGo.Controllers
             return View(vm);
         }
 
+        // POST: OwnersController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Owner owner)
+        {
+            try
+            {
+                _ownerRepo.AddOwner(owner);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // If something goes wrong, just keep the user on the same page so they can try again
+                return View(owner);
+            }
+        }
+
         // GET: Owners/Edit/5
         public ActionResult Edit(int id)
         {

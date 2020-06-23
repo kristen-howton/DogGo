@@ -25,7 +25,7 @@ namespace DogGo.Controllers
         {
             int ownerId = GetCurrentUserId();
 
-            List<Dog> dogs = _dogRepo.GetAllDogs();
+            List<Dog> dogs = _dogRepo.GetDogsByOwnerId(ownerId);
 
             return View(dogs);
         }

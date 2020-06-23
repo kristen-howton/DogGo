@@ -58,9 +58,13 @@ namespace DogGo.Repositories
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             Email = reader.GetString(reader.GetOrdinal("Email")),
                             Address = reader.GetString(reader.GetOrdinal("Address")),
-                            Phone = reader.GetString(reader.GetOrdinal("Phone")),
-                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
+                            Phone = reader.GetString(reader.GetOrdinal("Phone"))
                         };
+
+                        if (reader.IsDBNull(reader.GetOrdinal("NeighborhoodId")) == false)
+                        {
+                            owner.NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"));
+                        }
 
                         owners.Add(owner);
                     }
@@ -227,6 +231,5 @@ namespace DogGo.Repositories
             }
         }
 
-       
     }
 }

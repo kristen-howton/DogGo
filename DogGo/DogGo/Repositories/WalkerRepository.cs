@@ -46,10 +46,17 @@ namespace DogGo.Repositories
                         Walker walker = new Walker
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("Name")),
-                            ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
-                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
+                            Name = reader.GetString(reader.GetOrdinal("Name"))
                         };
+
+                        if (reader.IsDBNull(reader.GetOrdinal("ImageUrl")) == false)
+                        {
+                            walker.ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"));
+                        }
+                        if (reader.IsDBNull(reader.GetOrdinal("NeighborhoodId")) == false)
+                        {
+                            walker.NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"));
+                        }
 
                         walkers.Add(walker);
                     }
@@ -84,10 +91,18 @@ namespace DogGo.Repositories
                         Walker walker = new Walker
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("Name")),
-                            ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
-                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
+                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                            
                         };
+
+                        if (reader.IsDBNull(reader.GetOrdinal("ImageUrl")) == false)
+                        {
+                            walker.ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"));
+                        }
+                        if (reader.IsDBNull(reader.GetOrdinal("NeighborhoodId")) == false)
+                        {
+                            walker.NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"));
+                        }
 
                         walkers.Add(walker);
                     }
@@ -191,10 +206,17 @@ namespace DogGo.Repositories
                         Walker walker = new Walker
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("Name")),
-                            ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
-                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
+                            Name = reader.GetString(reader.GetOrdinal("Name"))
                         };
+
+                        if (reader.IsDBNull(reader.GetOrdinal("ImageUrl")) == false)
+                        {
+                            walker.ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"));
+                        }
+                        if (reader.IsDBNull(reader.GetOrdinal("NeighborhoodId")) == false)
+                        {
+                            walker.NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"));
+                        }
 
                         reader.Close();
                         return walker;
